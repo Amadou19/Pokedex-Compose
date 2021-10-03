@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.amadoutirera.pokedexcompose.pokemonlist.PokemonListScreen
 import com.amadoutirera.pokedexcompose.ui.theme.PokedexComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,15 +29,12 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
 
                     val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = "Pokemon_list_Screen"
-                    ){
-                        composable(route = "pokemon_list_screen"){
+                    NavHost(navController = navController, startDestination = "Pokemon_list_Screen"){
 
+                        composable(route = "pokemon_list_screen"){
+                            PokemonListScreen(navController = navController)
                         }
 
-                        //
                         composable(
                             route = "pokemon_detail_screen/{dominantColor}/{dominantColor}",
                             arguments = listOf(
@@ -47,7 +45,6 @@ class MainActivity : ComponentActivity() {
                                 navArgument("pokemonName"){
                                     type = NavType.StringArrayType
                                 }
-
                             )
                         ){
 
@@ -72,50 +69,11 @@ class MainActivity : ComponentActivity() {
 
 
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
     PokedexComposeTheme {
-        val navController = rememberNavController()
-        NavHost(
-            navController = navController,
-            startDestination = "Pokemon_list_Screen"
-        ){
-            composable(route = "pokemon_list_screen"){
-
-            }
-
-            //
-            composable(
-                route = "pokemon_detail_screen/{dominantColor}/{dominantColor}",
-                arguments = listOf(
-                    navArgument("dominantColor"){
-                        type = NavType.IntType
-                    },
-
-                    navArgument("pokemonName"){
-                        type = NavType.StringArrayType
-                    }
-
-                )
-            ){
-
-                val dominantColor = remember(){
-                    val color = it.arguments?.getInt("dominantColor")
-                    color?.let { Color(it)} ?: R.color.white
-                }
-
-                val pokemonName = remember(){
-                    it.arguments?.getString("pokemonName")
-                }
-
-            }
-            //
-        }
+        Text(text = "fufufu")
     }
 }
