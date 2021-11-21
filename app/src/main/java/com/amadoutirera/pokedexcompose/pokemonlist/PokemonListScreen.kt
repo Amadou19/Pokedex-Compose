@@ -4,7 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -26,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.request.ImageRequest
@@ -105,6 +104,27 @@ fun SearchBare(
         )
     }
 
+}
+
+@Composable
+fun PokemonList(navController: NavController, viewModel: PokemonListViewModel = hiltViewModel()){
+    val pokemonList by remember {viewModel.pokemonList}
+    val endReached by remember {viewModel.endReached}
+    val loadError by remember {viewModel.loadError}
+    val isLoad by remember {viewModel.isLoading}
+
+    LazyColumn(contentPadding = PaddingValues(16.dp)){
+        val itemCount = if (pokemonList.size % 2 == 0){
+            pokemonList.size / 2
+        }else {
+            pokemonList.size / 2 + 1
+        }
+
+        items (itemCount){
+            PokedexRow(rowIndex = it, entry = pokemonList, navController = navController )
+
+        }
+    }
 }
 
 
